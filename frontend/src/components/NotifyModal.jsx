@@ -40,7 +40,7 @@ export default function NotifyModal({ open, onClose, title, subtitle, icon, icon
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`http://localhost:4000${endpoint}`, {
+      const res = await fetch(`https://entrepreneurship-society.vercel.app/api/notify/event`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email.trim(), phone: phone.trim(), ...extra }),
