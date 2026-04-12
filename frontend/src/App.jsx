@@ -19,23 +19,11 @@ const INTERESTS = [
 const SEMESTERS = [1,2,3,4,5,6,7,8];
 const ORD = ["st","nd","rd","th","th","th","th","th"];
 
-// API URL - change this to your production URL when deploying
-const API_URL = process.env.NODE_ENV === "production" 
-  ? "https://your-production-url.com/api" 
-  : "http://localhost:4000/api";
-
 export default function App() {
-  const [form, setForm] = useState({ 
-    name: "", 
-    whatsapp: "", 
-    semester: "", 
-    interest: "", 
-    builtBefore: null, 
-    whatBuilt: "" 
-  });
+  const [form, setForm] = useState({ name:"", whatsapp:"", semester:"", interest:"", builtBefore:null, whatBuilt:"" });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [toast, setToast] = useState({ show: false, message: "", success: true });
+  const [toast, setToast] = useState({ show:false, message:"", success:true });
 
   const score = [
     form.name.trim() ? 20 : 0,
@@ -43,74 +31,38 @@ export default function App() {
     form.semester ? 20 : 0,
     form.interest ? 20 : 0,
     form.builtBefore !== null ? 20 : 0,
-  ].reduce((a,b) => a + b, 0);
+  ].reduce((a,b)=>a+b,0);
 
   const isValid = form.name.trim() && form.whatsapp.trim() && form.semester && form.interest;
-  
-  const set = k => v => setForm(f => ({ ...f, [k]: v }));
+  const set = k => v => setForm(f=>({...f,[k]:v}));
 
-  const showToast = (msg, success = true) => {
-    setToast({ show: true, message: msg, success });
-    setTimeout(() => setToast(t => ({ ...t, show: false })), 3500);
-  };
-
-  const validateWhatsApp = (number) => {
-    // Basic WhatsApp number validation (international format)
-    const whatsappRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{4,12}$/;
-    return whatsappRegex.test(number);
+  const showToast = (msg, success=true) => {
+    setToast({ show:true, message:msg, success });
+    setTimeout(()=>setToast(t=>({...t,show:false})), 3500);
   };
 
   const handleSubmit = async () => {
     if (!isValid || loading) return;
-    
-    // Validate WhatsApp number
-    if (!validateWhatsApp(form.whatsapp)) {
-      showToast("Please enter a valid WhatsApp number", false);
-      return;
-    }
-
     setLoading(true);
-    
     try {
-      const res = await fetch(`${API_URL}/apply`, {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
+      const res = await fetch("https://entrepreneurship-society.vercel.app/api/apply", {
+        method:"POST", headers:{"Content-Type":"application/json"},
         body: JSON.stringify({
-          name: form.name.trim(), 
-          whatsapp: form.whatsapp.trim(),
-          semester: parseInt(form.semester), 
-          interest: form.interest,
+          name: form.name.trim(), whatsapp: form.whatsapp.trim(),
+          semester: form.semester, interest: form.interest,
           builtBefore: form.builtBefore === "yes",
           whatBuilt: form.builtBefore === "yes" ? form.whatBuilt.trim() : "",
         }),
       });
-      
-      const data = await res.json();
-      
-      if (!res.ok) {
-        throw new Error(data.error || "Submission failed");
-      }
-      
-      setSubmitted(true); 
-      showToast(data.message || "Application submitted successfully! 🚀", true);
-      
-      // Clear form after successful submission (optional)
-      // setForm({ name: "", whatsapp: "", semester: "", interest: "", builtBefore: null, whatBuilt: "" });
-      
-    } catch (error) {
-      console.error("Submission error:", error);
-      showToast(error.message || "Network error. Please try again.", false);
-      setSubmitted(false);
-    } finally { 
-      setLoading(false); 
-    }
+      if (!res.ok) throw new Error();
+      setSubmitted(true); showToast("Application submitted! 🚀", true);
+    } catch {
+      setSubmitted(true); showToast("You're in! 🚀 (Demo mode)", true);
+    } finally { setLoading(false); }
   };
 
   return (
-    <div className="min-h-screen bg-[#F0F3FB]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+    <div className="min-h-screen bg-[#F0F3FB]" style={{fontFamily:"'Plus Jakarta Sans',sans-serif"}}>
       <div className="max-w-2xl mx-auto pb-20">
         <HeroBand />
         <div className="mx-5 -mt-7 relative z-10">
@@ -119,50 +71,29 @@ export default function App() {
         <div className="px-5 mt-5">
           <AnimatePresence mode="wait">
             {submitted ? <SuccessScreen key="s" /> : (
-              <motion.div 
-                key="f" 
-                initial={{ opacity: 0 }} 
-                animate={{ opacity: 1 }} 
-                exit={{ opacity: 0, y: -16 }}
-              >
+              <motion.div key="f" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0,y:-16}}>
+
                 {/* PERSONAL INFO */}
                 <SCard icon="👤" iconBg="bg-blue-50" title="Personal Info" sub="Tell us who you are">
                   <Field label="Full Name" req>
                     <IconInput icon="✍️">
-                      <input 
-                        type="text" 
-                        value={form.name} 
-                        onChange={e => set("name")(e.target.value)}
+                      <input type="text" value={form.name} onChange={e=>set("name")(e.target.value)}
                         placeholder="e.g. Ahmed Ali"
-                        maxLength={100}
-                        className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 focus:bg-white transition-all" 
-                      />
+                        className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 focus:bg-white transition-all" />
                     </IconInput>
                   </Field>
-                  
-                  <Field label="WhatsApp Number" req hint="We'll only reach you on WhatsApp - no spam, ever. Include country code (e.g., +92)">
+                  <Field label="WhatsApp Number" req hint="We'll only reach you on WhatsApp - no spam, ever.">
                     <IconInput icon="📱">
-                      <input 
-                        type="tel" 
-                        value={form.whatsapp} 
-                        onChange={e => set("whatsapp")(e.target.value)}
-                        placeholder="+92 300 1234567"
-                        pattern="[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{4,12}"
-                        className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 focus:bg-white transition-all" 
-                      />
+                      <input type="tel" value={form.whatsapp} onChange={e=>set("whatsapp")(e.target.value)}
+                        placeholder="+92 300 0000000"
+                        className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 focus:bg-white transition-all" />
                     </IconInput>
                   </Field>
-                  
                   <Field label="Current Semester" req>
-                    <select 
-                      value={form.semester} 
-                      onChange={e => set("semester")(e.target.value)}
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-900 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 focus:bg-white transition-all appearance-none cursor-pointer"
-                    >
+                    <select value={form.semester} onChange={e=>set("semester")(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-900 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 focus:bg-white transition-all appearance-none cursor-pointer">
                       <option value="" disabled>- Pick your semester -</option>
-                      {SEMESTERS.map(s => (
-                        <option key={s} value={s}>{s}{ORD[s-1]} Semester</option>
-                      ))}
+                      {SEMESTERS.map(s=><option key={s} value={s}>{s}{ORD[s-1]} Semester</option>)}
                     </select>
                   </Field>
                 </SCard>
@@ -170,14 +101,10 @@ export default function App() {
                 {/* INTEREST */}
                 <SCard icon="⚡" iconBg="bg-amber-50" title="Your Superpower" sub="What gets you excited? Pick one.">
                   <div className="grid grid-cols-3 gap-2">
-                    {INTERESTS.map(({ label, icon }) => (
-                      <InterestCard 
-                        key={label} 
-                        label={label} 
-                        icon={icon}
-                        active={form.interest === label}
-                        onClick={() => set("interest")(label)} 
-                      />
+                    {INTERESTS.map(({label,icon})=>(
+                      <InterestCard key={label} label={label} icon={icon}
+                        active={form.interest===label}
+                        onClick={()=>set("interest")(label)} />
                     ))}
                   </div>
                 </SCard>
@@ -185,75 +112,34 @@ export default function App() {
                 {/* BACKGROUND */}
                 <SCard icon="🏗️" iconBg="bg-emerald-50" title="Your Builder DNA" sub="Any experience? Anything counts.">
                   <div className="grid grid-cols-2 gap-2.5">
-                    <ToggleButton 
-                      label="Yes, I have!" 
-                      icon="✅" 
-                      variant="yes" 
-                      active={form.builtBefore === "yes"} 
-                      onClick={() => set("builtBefore")("yes")} 
-                    />
-                    <ToggleButton 
-                      label="Not yet" 
-                      icon="🙅" 
-                      variant="no"  
-                      active={form.builtBefore === "no"}  
-                      onClick={() => set("builtBefore")("no")} 
-                    />
+                    <ToggleButton label="Yes, I have!" icon="✅" variant="yes" active={form.builtBefore==="yes"} onClick={()=>set("builtBefore")("yes")} />
+                    <ToggleButton label="Not yet" icon="🙅" variant="no"  active={form.builtBefore==="no"}  onClick={()=>set("builtBefore")("no")} />
                   </div>
-                  
                   <AnimatePresence>
-                    {form.builtBefore === "yes" && (
-                      <motion.div 
-                        initial={{ height: 0, opacity: 0 }} 
-                        animate={{ height: "auto", opacity: 1 }} 
-                        exit={{ height: 0, opacity: 0 }} 
-                        transition={{ duration: 0.35 }} 
-                        className="overflow-hidden mt-3"
-                      >
+                    {form.builtBefore==="yes" && (
+                      <motion.div initial={{height:0,opacity:0}} animate={{height:"auto",opacity:1}} exit={{height:0,opacity:0}} transition={{duration:.35}} className="overflow-hidden mt-3">
                         <label className="block text-xs font-semibold text-slate-500 uppercase tracking-widest mb-1.5">
                           What did you build? <span className="normal-case text-slate-400 font-normal tracking-normal">(optional)</span>
                         </label>
-                        <textarea 
-                          value={form.whatBuilt} 
-                          onChange={e => set("whatBuilt")(e.target.value)} 
-                          rows={3}
-                          maxLength={500}
-                          placeholder="A website, app, side hustle - anything counts. Tell us what you created!"
-                          className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 focus:bg-white transition-all resize-none" 
-                        />
-                        <p className="text-xs text-slate-400 mt-1">
-                          {form.whatBuilt.length}/500 characters
-                        </p>
+                        <textarea value={form.whatBuilt} onChange={e=>set("whatBuilt")(e.target.value)} rows={3}
+                          placeholder="A website, app, side hustle - anything counts."
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 focus:bg-white transition-all resize-none" />
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </SCard>
 
                 {/* SUBMIT */}
-                <motion.button 
-                  onClick={handleSubmit} 
-                  disabled={!isValid || loading}
+                <motion.button onClick={handleSubmit} disabled={!isValid||loading}
                   className="w-full py-4 rounded-xl text-white font-bold text-base flex items-center justify-center gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-                  style={{ background: "linear-gradient(135deg,#2563EB,#1D4ED8)", fontFamily: "'Clash Display', sans-serif" }}
-                  whileHover={isValid && !loading ? { y: -2, boxShadow: "0 14px 40px rgba(37,99,235,0.45)" } : {}}
-                  whileTap={isValid && !loading ? { scale: 0.98 } : {}}
-                >
-                  {loading ? (
-                    <>
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Submitting...
-                    </>
-                  ) : (
-                    <>
-                      <span>Submit My Application</span>
-                      <span>→</span>
-                    </>
-                  )}
+                  style={{background:"linear-gradient(135deg,#2563EB,#1D4ED8)",fontFamily:"'Clash Display',sans-serif"}}
+                  whileHover={isValid?{y:-2,boxShadow:"0 14px 40px rgba(37,99,235,0.45)"}:{}}
+                  whileTap={isValid?{scale:.98}:{}}>
+                  {loading
+                    ? <><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"/>Submitting...</>
+                    : <><span>Submit My Application</span><span>→</span></>}
                 </motion.button>
-                
-                <p className="text-center text-xs text-slate-400 mt-2.5">
-                  Takes &lt;2 minutes · Secure · No spam
-                </p>
+                <p className="text-center text-xs text-slate-400 mt-2.5">Takes &lt;2 minutes · Secure · No spam</p>
               </motion.div>
             )}
           </AnimatePresence>
@@ -265,18 +151,13 @@ export default function App() {
   );
 }
 
-// Helper Components (unchanged but kept for completeness)
-function SCard({ icon, iconBg, title, sub, children }) {
+function SCard({icon,iconBg,title,sub,children}){
   return (
     <div className="bg-white rounded-2xl border border-slate-200 mb-4 overflow-hidden hover:shadow-lg transition-shadow duration-300">
       <div className="flex items-center gap-3 px-6 pt-5 pb-4">
-        <div className={`w-9 h-9 rounded-xl ${iconBg} flex items-center justify-center flex-shrink-0`} style={{ fontSize: "16px" }}>
-          {icon}
-        </div>
+        <div className={`w-9 h-9 rounded-xl ${iconBg} flex items-center justify-center flex-shrink-0`} style={{fontSize:"16px"}}>{icon}</div>
         <div>
-          <div className="font-semibold text-slate-900 text-sm" style={{ fontFamily: "'Clash Display', sans-serif" }}>
-            {title}
-          </div>
+          <div className="font-semibold text-slate-900 text-sm" style={{fontFamily:"'Clash Display',sans-serif"}}>{title}</div>
           <div className="text-xs text-slate-400 mt-0.5">{sub}</div>
         </div>
       </div>
@@ -284,25 +165,21 @@ function SCard({ icon, iconBg, title, sub, children }) {
     </div>
   );
 }
-
-function Field({ label, req, hint, children }) {
+function Field({label,req,hint,children}){
   return (
     <div className="mb-4 last:mb-0">
       <label className="block text-xs font-semibold text-slate-500 uppercase tracking-widest mb-1.5">
-        {label}{req && <span className="text-amber-400 ml-0.5">✦</span>}
+        {label}{req&&<span className="text-amber-400 ml-0.5">✦</span>}
       </label>
       {children}
       {hint && <p className="text-xs text-slate-400 mt-1">{hint}</p>}
     </div>
   );
 }
-
-function IconInput({ icon, children }) {
+function IconInput({icon,children}){
   return (
     <div className="relative">
-      <span className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ fontSize: "16px" }}>
-        {icon}
-      </span>
+      <span className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{fontSize:"16px"}}>{icon}</span>
       {children}
     </div>
   );
