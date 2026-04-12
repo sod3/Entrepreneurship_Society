@@ -14,7 +14,7 @@ export default function HeroBand() {
         {/* badge */}
         <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border" style={{background:"rgba(255,255,255,0.07)",borderColor:"rgba(255,255,255,0.14)"}}>
           <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" style={{boxShadow:"0 0 8px #F59E0B"}} />
-          <span className="text-xs font-medium" style={{color:"rgba(255,255,255,0.82)",letterSpacing:".04em"}}>Applications Open · Spring 2025</span>
+          <span className="text-xs font-medium" style={{color:"rgba(255,255,255,0.82)",letterSpacing:".04em"}}>Applications Open</span>
         </div>
 
         {/* headline */}

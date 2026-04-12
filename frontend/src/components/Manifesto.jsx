@@ -27,7 +27,7 @@ export default function Manifesto() {
         </h2>
 
         {[
-          <>Our goal is to build a <strong style={{color:"rgba(255,255,255,0.85)"}}>Silicon Valley–like ecosystem</strong> inside our university. Here, everyone helps each other grow.</>,
+          <>Our goal is to build a <strong style={{color:"rgba(255,255,255,0.85)"}}>Silicon Valley-like ecosystem</strong> inside our university. Here, everyone helps each other grow.</>,
           <>You won't just attend events - you will <strong style={{color:"rgba(255,255,255,0.85)"}}>build real products</strong>, find teammates, and <strong style={{color:"rgba(255,255,255,0.85)"}}>launch with real users.</strong></>,
           <>In just a few months, you can go from:</>,
         ].map((p,i)=>(

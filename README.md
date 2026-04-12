@@ -102,5 +102,5 @@ npm run dev
 - **Accent**: Amber/Orange #F59E0B
 - **Background**: Slate-50 (#F8FAFC)
 - **Fonts**: Syne (headings) + DM Sans (body)
-- **Radius**: 12px–24px rounded cards
+- **Radius**: 12px-24px rounded cards
 - **Shadows**: Soft blue-tinted shadows
