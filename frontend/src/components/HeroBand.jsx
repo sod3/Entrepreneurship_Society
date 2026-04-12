@@ -28,15 +28,6 @@ export default function HeroBand() {
           Gutech Entrepreneurship Society is building a startup factory inside our university. Apply in under 2 minutes.
         </p>
 
-        {/* stats */}
-        <div className="flex gap-7 flex-wrap">
-          {[["120+","Members"],["18","Projects Launched"],["6","Startups Active"]].map(([n,l])=>(
-            <div key={l} className="flex flex-col gap-0.5">
-              <span style={{fontFamily:"'Clash Display',sans-serif",fontSize:22,fontWeight:600,color:"#fff"}}>{n}</span>
-              <span style={{fontSize:11,color:"rgba(255,255,255,0.38)",letterSpacing:".07em",textTransform:"uppercase"}}>{l}</span>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );
