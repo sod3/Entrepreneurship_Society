@@ -5,13 +5,15 @@ import NotifyModal from '../components/NotifyModal';
 const events = [
   {
     icon: '💡', iconBg: 'bg-orange-50', badgeBg: 'bg-orange-50', badgeText: 'text-orange-700',
-    title: 'Problem Discovery Workshop',
+    badgeLabel: 'Thursday, 16th April', // Custom badge text for this event
+    title: 'How to Identify Real Startup Problems (That People Will Pay For)',
     desc: 'Learn how to identify real-world problems people actually face and validate ideas that can turn into profitable startups.',
     tags: ['90 Minutes', 'Hands-on', 'Free'],
     modalIcon: '💡', modalIconBg: 'bg-orange-50',
   },
   {
     icon: '🔍', iconBg: 'bg-blue-50', badgeBg: 'bg-blue-50', badgeText: 'text-blue-700',
+    badgeLabel: 'Coming Soon', // Custom badge text for this event
     title: 'Problem Validation Bootcamp',
     desc: 'Validate your startup idea through real user interviews, market research, and feedback to ensure people will actually pay for your solution.',
     tags: ['2 Hours', 'Interactive', 'Beginner Friendly'],
@@ -19,6 +21,7 @@ const events = [
   },
   {
     icon: '🧠', iconBg: 'bg-purple-50', badgeBg: 'bg-purple-50', badgeText: 'text-purple-700',
+    badgeLabel: 'Coming Soon', // Custom badge text for this event
     title: 'MVP Building Workshop',
     desc: 'Turn your ideas into reality by building a Minimum Viable Product using no-code tools or modern development stacks.',
     tags: ['3 Hours', 'Practical', 'Build Session'],
@@ -26,6 +29,7 @@ const events = [
   },
   {
     icon: '⚡', iconBg: 'bg-yellow-50', badgeBg: 'bg-yellow-50', badgeText: 'text-yellow-700',
+    badgeLabel: 'Coming Soon', // You can also keep "Coming Soon" for some
     title: 'Startup Hackathon',
     desc: 'Collaborate in teams to build innovative solutions to real-world problems within a limited time and compete for exciting prizes.',
     tags: ['24-48 Hours', 'Team Event', 'Competition'],
@@ -36,6 +40,7 @@ const events = [
     iconBg: 'bg-pink-50',
     badgeBg: 'bg-pink-50',
     badgeText: 'text-pink-700',
+    badgeLabel: 'Coming Soon', // Custom badge text for this event
     title: 'Startup Pitch Day',
     desc: 'Present your startup idea to industry experts, get valuable feedback, and compete to win recognition and rewards.',
     tags: ['Pitching', 'Judged Event', 'Networking'],
@@ -47,6 +52,7 @@ const events = [
     iconBg: 'bg-green-50',
     badgeBg: 'bg-green-50',
     badgeText: 'text-green-700',
+    badgeLabel: 'Coming Soon', // Custom badge text for this event
     title: 'First Users & Revenue Workshop',
     desc: 'Learn growth strategies, user acquisition techniques, and how to generate your first revenue without heavy investment.',
     tags: ['Growth', 'Marketing', 'Monetization'],
@@ -58,6 +64,7 @@ const events = [
     iconBg: 'bg-indigo-50',
     badgeBg: 'bg-indigo-50',
     badgeText: 'text-indigo-700',
+    badgeLabel: 'Coming Soon', // Custom badge text for this event
     title: 'Startup vs Career Session',
     desc: 'Understand the best path for your future-startup, freelancing, or job-and how to make the right decision based on your goals.',
     tags: ['Career', 'Guidance', 'Interactive'],
@@ -69,6 +76,7 @@ const events = [
     iconBg: 'bg-gray-50',
     badgeBg: 'bg-gray-50',
     badgeText: 'text-gray-700',
+    badgeLabel: 'Coming Soon', // Custom badge text for this event
     title: 'Founder Networking Night',
     desc: 'Connect with like-minded individuals, find co-founders, share ideas, and build meaningful relationships in a relaxed environment.',
     tags: ['Networking', 'Community', 'Fun'],
@@ -147,7 +155,7 @@ export default function Events() {
                   {ev.icon}
                 </div>
                 <span className={`text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full ${ev.badgeBg} ${ev.badgeText}`}>
-                  Coming Soon
+                  {ev.badgeLabel || 'Coming Soon'} {/* Display custom badge text or fallback to "Coming Soon" */}
                 </span>
               </div>
 

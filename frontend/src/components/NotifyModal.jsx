@@ -2,17 +2,17 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 /**
- * NotifyModal — reusable modal for event + blog notification sign-ups.
+ * NotifyModal - reusable modal for event + blog notification sign-ups.
  *
  * Props:
- *   open       boolean          — controls visibility
- *   onClose    () => void       — called when user dismisses
- *   title      string           — modal headline
- *   subtitle   string           — modal body copy
- *   icon       string           — emoji shown at top
- *   iconBg     string           — tailwind bg class, e.g. "bg-blue-50"
- *   endpoint   string           — POST URL, e.g. "/api/notify/event"
- *   extra      object           — extra fields merged into POST body (e.g. { eventName })
+ *   open       boolean          - controls visibility
+ *   onClose    () => void       - called when user dismisses
+ *   title      string           - modal headline
+ *   subtitle   string           - modal body copy
+ *   icon       string           - emoji shown at top
+ *   iconBg     string           - tailwind bg class, e.g. "bg-blue-50"
+ *   endpoint   string           - POST URL, e.g. "/api/notify/event"
+ *   extra      object           - extra fields merged into POST body (e.g. { eventName })
  */
 export default function NotifyModal({ open, onClose, title, subtitle, icon, iconBg = 'bg-blue-50', endpoint, extra = {} }) {
   const [email, setEmail]   = useState('');

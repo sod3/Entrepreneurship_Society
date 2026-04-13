@@ -9,7 +9,7 @@ const blogs = [
   { thumb: 'from-amber-100 to-amber-50', icon: '🎯', cat: 'Product', title: 'The Only Validation Framework You will Ever Need', excerpt: 'Stop building in the dark. Here is how to validate your idea before writing a single line of code.', author: 'Sara Farooq', initials: 'SF', read: '7 min read' },
   { thumb: 'from-emerald-100 to-emerald-50', icon: '🤝', cat: 'Mindset', title: 'Finding Co-Founders: What I Wish Someone Told Me', excerpt: 'The co-founder search is brutal. Here is a framework for finding the right person and avoiding costly mistakes.', author: 'Maha Raza', initials: 'MR', read: '6 min read' },
   { thumb: 'from-violet-100 to-violet-50', icon: '🤖', cat: 'Tech', title: 'Building Your First AI Product as a Non-Technical Founder', excerpt: 'You don not need to code. Here is how to build an AI-powered product using no-code tools and smart prompting.', author: 'Zain Ahmed', initials: 'ZA', read: '8 min read' },
-  { thumb: 'from-rose-100 to-rose-50', icon: '💸', cat: 'Marketing', title: 'Social Media That Actually Converts — A Student Founder Playbook', excerpt: 'Forget vanity metrics. This is how we built an audience that actually buys.', author: 'Hira Ali', initials: 'HA', read: '4 min read' },
+  { thumb: 'from-rose-100 to-rose-50', icon: '💸', cat: 'Marketing', title: 'Social Media That Actually Converts - A Student Founder Playbook', excerpt: 'Forget vanity metrics. This is how we built an audience that actually buys.', author: 'Hira Ali', initials: 'HA', read: '4 min read' },
   { thumb: 'from-teal-100 to-teal-50', icon: '🏗️', cat: 'Product', title: 'Ship in 7 Days: The Minimal Viable Launch Framework', excerpt: 'Perfectionism kills startups. Ship your product in one week and start learning from real users.', author: 'Omar Usman', initials: 'OU', read: '6 min read' },
 ];
 
@@ -43,7 +43,7 @@ export default function Blogs() {
             Learn from builders<br />who've done it.
           </h1>
           <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.5)', maxWidth: 460, lineHeight: 1.78 }}>
-            Real playbooks, honest case studies, and growth strategies — written by founders, for founders.
+            Real playbooks, honest case studies, and growth strategies - written by founders, for founders.
           </p>
         </div>
       </section>
@@ -125,7 +125,7 @@ export default function Blogs() {
         </div>
 
         {filtered.length === 0 && (
-          <div className="text-center py-16 text-slate-400 text-sm">No posts in this category yet — check back soon!</div>
+          <div className="text-center py-16 text-slate-400 text-sm">No posts in this category yet - check back soon!</div>
         )}
       </div>
 
@@ -134,7 +134,7 @@ export default function Blogs() {
         open={modalOpen}
         onClose={handleBlogModalClose}
         title="Get notified on new blogs"
-        subtitle="Drop your email and we'll ping you the moment a new post goes live — no spam, ever."
+        subtitle="Drop your email and we'll ping you the moment a new post goes live - no spam, ever."
         icon="✍️"
         iconBg="bg-blue-50"
         endpoint="/api/notify/blog"
