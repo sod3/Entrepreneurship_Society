@@ -64,10 +64,10 @@ function logDivider(title) {
 }
 
 // ─────────────────────────────────────────
-// ROUTES — APPLICATIONS
+// ROUTES - APPLICATIONS
 // ─────────────────────────────────────────
 
-// POST /api/apply — submit membership application
+// POST /api/apply - submit membership application
 app.post("/api/apply", async (req, res) => {
   try {
     const { name, whatsapp, semester, interest, builtBefore, whatBuilt } = req.body;
@@ -98,7 +98,7 @@ app.post("/api/apply", async (req, res) => {
   }
 });
 
-// GET /api/submissions — all applications (admin)
+// GET /api/submissions - all applications (admin)
 app.get("/api/submissions", async (req, res) => {
   try {
     const docs = await Submission.find().sort({ submittedAt: -1 });
@@ -131,10 +131,10 @@ app.delete("/api/submissions/:id", async (req, res) => {
 });
 
 // ─────────────────────────────────────────
-// ROUTES — EVENT NOTIFICATIONS
+// ROUTES - EVENT NOTIFICATIONS
 // ─────────────────────────────────────────
 
-// POST /api/notify/event — sign up for event notifications
+// POST /api/notify/event - sign up for event notifications
 app.post("/api/notify/event", async (req, res) => {
   try {
     const { email, phone, eventName } = req.body;
@@ -171,7 +171,7 @@ app.post("/api/notify/event", async (req, res) => {
   }
 });
 
-// GET /api/notify/event — all event sign-ups (admin)
+// GET /api/notify/event - all event sign-ups (admin)
 app.get("/api/notify/event", async (req, res) => {
   try {
     const docs = await EventNotify.find().sort({ signedUpAt: -1 });
@@ -187,7 +187,7 @@ app.get("/api/notify/event", async (req, res) => {
   }
 });
 
-// GET /api/notify/event/:eventName — sign-ups for a specific event
+// GET /api/notify/event/:eventName - sign-ups for a specific event
 app.get("/api/notify/event/:eventName", async (req, res) => {
   try {
     const docs = await EventNotify.find({ eventName: req.params.eventName }).sort({ signedUpAt: -1 });
@@ -209,10 +209,10 @@ app.delete("/api/notify/event/:id", async (req, res) => {
 });
 
 // ─────────────────────────────────────────
-// ROUTES — BLOG NOTIFICATIONS / NEWSLETTER
+// ROUTES - BLOG NOTIFICATIONS / NEWSLETTER
 // ─────────────────────────────────────────
 
-// POST /api/notify/blog — subscribe to blog notifications
+// POST /api/notify/blog - subscribe to blog notifications
 app.post("/api/notify/blog", async (req, res) => {
   try {
     const { email, phone } = req.body;
@@ -244,7 +244,7 @@ app.post("/api/notify/blog", async (req, res) => {
   }
 });
 
-// GET /api/notify/blog — all blog subscribers (admin)
+// GET /api/notify/blog - all blog subscribers (admin)
 app.get("/api/notify/blog", async (req, res) => {
   try {
     const docs = await BlogNotify.find().sort({ signedUpAt: -1 });

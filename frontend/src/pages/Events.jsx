@@ -5,7 +5,8 @@ import NotifyModal from '../components/NotifyModal';
 const events = [
   {
     icon: '💡', iconBg: 'bg-orange-50', badgeBg: 'bg-orange-50', badgeText: 'text-orange-700',
-    badgeLabel: 'Thursday, 16th April', // Custom badge text for this event
+    badgeLabel: 'Thursday, 16th April',
+    accessType: 'open', // 'open' or 'members'
     title: 'How to Identify Real Startup Problems (That People Will Pay For)',
     desc: 'Learn how to identify real-world problems people actually face and validate ideas that can turn into profitable startups.',
     tags: ['90 Minutes', 'Hands-on', 'Free'],
@@ -13,7 +14,8 @@ const events = [
   },
   {
     icon: '🔍', iconBg: 'bg-blue-50', badgeBg: 'bg-blue-50', badgeText: 'text-blue-700',
-    badgeLabel: 'Coming Soon', // Custom badge text for this event
+    badgeLabel: 'Coming Soon',
+    accessType: 'members', // 'open' or 'members'
     title: 'Problem Validation Bootcamp',
     desc: 'Validate your startup idea through real user interviews, market research, and feedback to ensure people will actually pay for your solution.',
     tags: ['2 Hours', 'Interactive', 'Beginner Friendly'],
@@ -21,7 +23,8 @@ const events = [
   },
   {
     icon: '🧠', iconBg: 'bg-purple-50', badgeBg: 'bg-purple-50', badgeText: 'text-purple-700',
-    badgeLabel: 'Coming Soon', // Custom badge text for this event
+    badgeLabel: 'Coming Soon',
+    accessType: 'members',
     title: 'MVP Building Workshop',
     desc: 'Turn your ideas into reality by building a Minimum Viable Product using no-code tools or modern development stacks.',
     tags: ['3 Hours', 'Practical', 'Build Session'],
@@ -29,7 +32,8 @@ const events = [
   },
   {
     icon: '⚡', iconBg: 'bg-yellow-50', badgeBg: 'bg-yellow-50', badgeText: 'text-yellow-700',
-    badgeLabel: 'Coming Soon', // You can also keep "Coming Soon" for some
+    badgeLabel: 'Coming Soon',
+    accessType: 'members',
     title: 'Startup Hackathon',
     desc: 'Collaborate in teams to build innovative solutions to real-world problems within a limited time and compete for exciting prizes.',
     tags: ['24-48 Hours', 'Team Event', 'Competition'],
@@ -40,7 +44,8 @@ const events = [
     iconBg: 'bg-pink-50',
     badgeBg: 'bg-pink-50',
     badgeText: 'text-pink-700',
-    badgeLabel: 'Coming Soon', // Custom badge text for this event
+    badgeLabel: 'Coming Soon',
+    accessType: 'open',
     title: 'Startup Pitch Day',
     desc: 'Present your startup idea to industry experts, get valuable feedback, and compete to win recognition and rewards.',
     tags: ['Pitching', 'Judged Event', 'Networking'],
@@ -52,7 +57,8 @@ const events = [
     iconBg: 'bg-green-50',
     badgeBg: 'bg-green-50',
     badgeText: 'text-green-700',
-    badgeLabel: 'Coming Soon', // Custom badge text for this event
+    badgeLabel: 'Coming Soon',
+    accessType: 'members',
     title: 'First Users & Revenue Workshop',
     desc: 'Learn growth strategies, user acquisition techniques, and how to generate your first revenue without heavy investment.',
     tags: ['Growth', 'Marketing', 'Monetization'],
@@ -64,7 +70,8 @@ const events = [
     iconBg: 'bg-indigo-50',
     badgeBg: 'bg-indigo-50',
     badgeText: 'text-indigo-700',
-    badgeLabel: 'Coming Soon', // Custom badge text for this event
+    badgeLabel: 'Coming Soon',
+    accessType: 'open',
     title: 'Startup vs Career Session',
     desc: 'Understand the best path for your future-startup, freelancing, or job-and how to make the right decision based on your goals.',
     tags: ['Career', 'Guidance', 'Interactive'],
@@ -76,7 +83,8 @@ const events = [
     iconBg: 'bg-gray-50',
     badgeBg: 'bg-gray-50',
     badgeText: 'text-gray-700',
-    badgeLabel: 'Coming Soon', // Custom badge text for this event
+    badgeLabel: 'Coming Soon',
+    accessType: 'members',
     title: 'Founder Networking Night',
     desc: 'Connect with like-minded individuals, find co-founders, share ideas, and build meaningful relationships in a relaxed environment.',
     tags: ['Networking', 'Community', 'Fun'],
@@ -84,6 +92,24 @@ const events = [
     modalIconBg: 'bg-gray-50',
   },
 ];
+
+// Helper function to get access badge styles
+const getAccessBadgeStyles = (accessType) => {
+  if (accessType === 'members') {
+    return {
+      bg: 'bg-purple-100',
+      text: 'text-purple-700',
+      icon: '👑',
+      label: 'Members Only'
+    };
+  }
+  return {
+    bg: 'bg-green-100',
+    text: 'text-green-700',
+    icon: '🌍',
+    label: 'Open for Everyone'
+  };
+};
 
 export default function Events() {
   const [notified, setNotified]       = useState({});
@@ -144,50 +170,63 @@ export default function Events() {
 
         {/* Grid */}
         <div className="grid gap-5" style={{ gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))' }}>
-          {events.map((ev, i) => (
-            <motion.div key={ev.title}
-              className="bg-white rounded-[22px] border border-slate-200 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-blue-200"
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07, duration: 0.4 }}>
+          {events.map((ev, i) => {
+            const accessBadge = getAccessBadgeStyles(ev.accessType);
+            return (
+              <motion.div key={ev.title}
+                className="bg-white rounded-[22px] border border-slate-200 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-blue-200"
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07, duration: 0.4 }}>
 
-              {/* Card header */}
-              <div className="flex items-start justify-between px-6 pt-6 pb-0 gap-3">
-                <div className={`w-14 h-14 rounded-[16px] ${ev.iconBg} flex items-center justify-center flex-shrink-0`} style={{ fontSize: 26 }}>
-                  {ev.icon}
-                </div>
-                <span className={`text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full ${ev.badgeBg} ${ev.badgeText}`}>
-                  {ev.badgeLabel || 'Coming Soon'} {/* Display custom badge text or fallback to "Coming Soon" */}
-                </span>
-              </div>
-
-              {/* Card body */}
-              <div className="px-6 py-5">
-                <h3 className="mb-2" style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 18, fontWeight: 600, color: '#0A0F1E' }}>
-                  {ev.title}
-                </h3>
-                <p className="text-slate-500 text-sm leading-relaxed mb-4">{ev.desc}</p>
-                <div className="flex gap-2 flex-wrap mb-4">
-                  {ev.tags.map(t => (
-                    <span key={t} className="text-[11px] font-semibold px-3 py-1 rounded-full bg-slate-100 text-slate-600">{t}</span>
-                  ))}
-                </div>
-
-                {/* Notify button */}
-                {notified[ev.title] ? (
-                  <div className="w-full py-2.5 rounded-xl text-sm font-semibold text-center"
-                    style={{ background: '#ECFDF5', color: '#065F46', border: '1.5px solid #6EE7B7' }}>
-                    ✓ You'll be notified!
+                {/* Card header */}
+                <div className="px-6 pt-6 pb-0">
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className={`w-14 h-14 rounded-[16px] ${ev.iconBg} flex items-center justify-center flex-shrink-0`} style={{ fontSize: 26 }}>
+                      {ev.icon}
+                    </div>
+                    <div className="flex flex-col items-end gap-2">
+                      {/* Date/Badge Label */}
+                      <span className={`text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full ${ev.badgeBg} ${ev.badgeText}`}>
+                        {ev.badgeLabel || 'Coming Soon'}
+                      </span>
+                      {/* Access Badge */}
+                      <span className={`text-[10px] font-bold px-3 py-1.5 rounded-full ${accessBadge.bg} ${accessBadge.text} flex items-center gap-1`}>
+                        <span>{accessBadge.icon}</span>
+                        <span>{accessBadge.label}</span>
+                      </span>
+                    </div>
                   </div>
-                ) : (
-                  <motion.button
-                    onClick={() => openNotify(ev)}
-                    className="w-full py-2.5 rounded-xl text-sm font-semibold border border-slate-200 text-blue-600 transition-all duration-200 hover:bg-blue-600 hover:text-white hover:border-blue-600"
-                    whileTap={{ scale: 0.98 }}>
-                    🔔 Notify Me
-                  </motion.button>
-                )}
-              </div>
-            </motion.div>
-          ))}
+                </div>
+
+                {/* Card body */}
+                <div className="px-6 py-5">
+                  <h3 className="mb-2" style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 18, fontWeight: 600, color: '#0A0F1E' }}>
+                    {ev.title}
+                  </h3>
+                  <p className="text-slate-500 text-sm leading-relaxed mb-4">{ev.desc}</p>
+                  <div className="flex gap-2 flex-wrap mb-4">
+                    {ev.tags.map(t => (
+                      <span key={t} className="text-[11px] font-semibold px-3 py-1 rounded-full bg-slate-100 text-slate-600">{t}</span>
+                    ))}
+                  </div>
+
+                  {/* Notify button */}
+                  {notified[ev.title] ? (
+                    <div className="w-full py-2.5 rounded-xl text-sm font-semibold text-center"
+                      style={{ background: '#ECFDF5', color: '#065F46', border: '1.5px solid #6EE7B7' }}>
+                      ✓ You'll be notified!
+                    </div>
+                  ) : (
+                    <motion.button
+                      onClick={() => openNotify(ev)}
+                      className="w-full py-2.5 rounded-xl text-sm font-semibold border border-slate-200 text-blue-600 transition-all duration-200 hover:bg-blue-600 hover:text-white hover:border-blue-600"
+                      whileTap={{ scale: 0.98 }}>
+                      🔔 Notify Me
+                    </motion.button>
+                  )}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
 
