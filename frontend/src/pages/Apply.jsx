@@ -100,7 +100,7 @@ export default function Apply() {
 
                 {/* INTEREST */}
                 <SCard icon="⚡" iconBg="bg-amber-50" title="Your Superpower" sub="What gets you excited? Pick one.">
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {INTERESTS.map(({label,icon})=>(
                       <InterestCard key={label} label={label} icon={icon}
                         active={form.interest===label}
