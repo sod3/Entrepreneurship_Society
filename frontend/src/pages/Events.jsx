@@ -5,7 +5,7 @@ import NotifyModal from '../components/NotifyModal';
 const events = [
   {
     icon: '💡', iconBg: 'bg-orange-50', badgeBg: 'bg-orange-50', badgeText: 'text-orange-700',
-    badgeLabel: 'Thursday, 16th April',
+    badgeLabel: 'Thursday, 23th April',
     accessType: 'open', // 'open' or 'members'
     title: 'How to Identify Real Startup Problems (That People Will Pay For)',
     desc: 'Learn how to identify real-world problems people actually face and validate ideas that can turn into profitable startups.',

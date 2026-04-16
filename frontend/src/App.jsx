@@ -20,7 +20,7 @@ export default function App() {
         </main>
         <footer className="w-full py-8 mt-auto border-t border-[#E4E9F5] bg-white flex flex-col items-center justify-center">
           <p className="text-sm font-medium text-slate-500">
-            Designed and Developed by{' '}
+            A startup ecosystem initiative by{' '}
             <span className="font-bold text-[#0A0F1E] tracking-wide">Mudassir Muneer</span>
           </p>
         </footer>
